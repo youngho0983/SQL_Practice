@@ -191,5 +191,58 @@ SELECT * FROM TSTAFF WHERE DEPART IN ("영업부","인사과") AND GRADE = "대�
 SELECT DISTINCT GRADE FROM TSTAFF;
 SELECT * FROM TSTAFF WHERE GRADE IN ("차장", "이사" ,"부장") AND GENDER = "여";
 
+/* 정렬 order by
+oracle 에서는 입력 순서대로 나오고
+mariadb sql server 에서는 기본키의 오름차순 정렬이 된다.
+order by 필드 [asc/desc]
+*/
+
+select * from tcity order by popu ;
+select * from tcity order by popu desc;
+
+select * from tcity order by region, name desc;
 
 
+
+select name , popu * 1000 / area from tcity order by popu * 1000 / area;
+
+select * from tcity where region = '경기' order by area;
+
+select * from tstaff;
+
+// 직원 목록을 월급이 적은 사람부터 순서대로 , 월급이 같다면 성취도가 높은 순으로
+select * from tstaff order by salary asc , score desc;
+
+// 영업부 직원을 먼저 입사한 순서대로 정렬
+
+select * from tstaff where depart = '영업부' order by joindate asc;
+
+select distinct region from tcity;
+
+select distinct region from tcity order by region;
+
+//2020 이후 신입 사원 받은 적 있는 부서 목록을 조사하라.
+select DISTINCT depart from tstaff where joinDate >= 2020-01-01;
+
+select * from tstaff;
+
+
+//의사 컬럼
+// oracle 경우 rowid , rownum 사용 가능 sqlServer 에서는 select top nnum [percent] 으로 숫자 지정
+select * from tstaff limit 10;
+
+select * from tcity order by area desc limit 4;
+
+select * from (select * from tcity order by area desc limit 4 ) temp order by area;
+
+
+// offset fetch (모든 sql 통합으로 만듬)
+// order by 기준 offset 건너뛸행수 rows fetch next 출력할 행수 rows only
+
+
+// 잉 왜 안되징.. select * from tcity order by area desc offset 0 rows fetch next 4 rows only;
+// maria 에선 아직 지원 x
+
+// 직원 월급순으로 정렬 후 12 ~ 16 위까지 출력
+
+select * from tstaff order by salary limit 12,4;
