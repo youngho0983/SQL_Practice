@@ -145,9 +145,51 @@ SELECT * FROM TSTAFF WHERE NAME LIKE ('%신%');
 
 
 
+select * from tstaff;
+
+select * from strtest where  name like ('%30#%%') escape '#';
 
 
+select * from tcity where popu between 50 and 100;
 
+select * from tcity where popu >= 50 and popu <= 100;
+
+
+select * from tstaff where name BETWEEN '가' AND '사';
+
+SELECT * FROM TSTAFF WHERE JOINDATE BETWEEN 20150101 AND 20180101;
+
+// 면접 500~1000  사이의 도시의 목록을 조사하라
+SELECT * FROM TCITY WHERE AREA BETWEEN 500 AND 1000;
+// 200 300 (이상 이하로 됨) 사이의 월급 사람들
+SELECT * FROM TSTAFF WHERE SALARY BETWEEN 200 AND 300;
+
+
+SELECT * FROM TCITY WHERE REGION IN ("경기","전라");
+
+SELECT * FROM TCITY WHERE REGION = "경기" OR REGION = "전라";
+
+SELECT * FROM TCITY WHERE REGION NOT IN ('경상', '전라');
+/*
+SELECT * 
+FROM TSTAFF 
+WHERE NAME LIKE IN ('이%' , '안%');
+*/
+
+SELECT *
+FROM TSTAFF
+WHERE NAME LIKE '이%' OR NAME LIKE '안%';
+
+
+// 총무부 영업부
+SELECT * FROM TSTAFF WHERE DEPART IN ("총무부","영업부");
+
+//인사과 영업부 대리 목록
+SELECT * FROM TSTAFF WHERE DEPART IN ("영업부","인사과") AND GRADE = "대리";
+
+// 차장급 이상의 여직원 목록
+SELECT DISTINCT GRADE FROM TSTAFF;
+SELECT * FROM TSTAFF WHERE GRADE IN ("차장", "이사" ,"부장") AND GENDER = "여";
 
 
 
