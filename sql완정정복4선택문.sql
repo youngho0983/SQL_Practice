@@ -246,3 +246,131 @@ select * from (select * from tcity order by area desc limit 4 ) temp order by ar
 // 직원 월급순으로 정렬 후 12 ~ 16 위까지 출력
 
 select * from tstaff order by salary limit 12,4;
+
+
+//집계 함수
+// 함수는 입력값으로 부터 모종의 계산을 하여 출력값을 리턴하는 장치이다. function(필드)
+
+select count(*) from tstaff;
+
+explain (
+select * from tstaff );
+
+explain (
+
+select count(*) as "총 직원 수 " from tstaff
+);
+EXPLAIN (
+
+select count(*) from tstaff where salary >= 400
+);
+// from 으로 가져와서 where 로 자르고 select 를 하는 건가 보구나.
+
+
+select count(*) from tstaff where salary >= 10000;
+
+select count(name) from tstaff;
+
+select count(distinct depart) from tstaff;
+
+//count 함수는 필드값중 NULL 인 레코드의 갯수는 제외한다
+
+select count(score) from tstaff;
+
+select count(ifnull(score, 12)) from tstaff;
+
+select count(*) from tstaff where score is null;
+
+select * from tstaff where score is null;
+
+
+select count(*) from tstaff where score >= 80;
+
+
+select sum(popu), avg(popu) from tcity;
+
+select min(area), max(area) from tcity;
+
+
+// 역시 웨어절로 가져 온 후에 select 절 실행이구나.
+select sum(score), avg(score) from tstaff where depart = '인사과';
+
+
+select min(salary), max(salary) from tstaff where depart = '영업부';
+
+// max min 은 문자열에서 사용 가능하다.
+
+
+select min(name) from tstaff;
+
+select max(name) from tstaff;
+
+select popu , name from tcity where popu = (select max(popu) from tcity);
+
+//여직원 중 최고 월급은 얼마인가
+
+select max(salary) from tstaff where gender = '여';
+
+//총무부 직원 최초 입사한 날짜
+select * from tstaff;
+
+
+select min(joinDate ) from tstaff where depart = '총무부';
+
+
+select count(*) from tstaff;
+// 행을 넣으면 null 제외
+select count(score) from tstaff;
+
+select avg(salary) from tstaff;
+select sum(salary) / count(*) from tstaff;
+
+select avg(score) from tstaff;
+select sum(score) / count(*) from tstaff;
+
+//count 함수는 없으면 0 리턴 나머진 NULL 리턴
+
+select count(*) from tstaff where depart = '비서실';
+select  sum(salary) from tstaff where depart = '비서실';
+
+
+select depart , avg(salary) from tstaff group by depart;
+
+select depart , min(joinDate) , avg(score) from tstaff group by depart;
+
+// 도시 목록에서 지역별 인구수 
+
+select name , sum(popu) from tcity group by name;
+
+
+select depart , gender , count(*) from tstaff group by depart, gender;
+
+
+select depart, sum(salary) from tstaff group by depart;
+
+
+// from 으로 가져와서 where 절로 잘라 group 을 만들어 select로 정리해서  having으로 마무리
+
+select depart, avg(salary) 
+	from tstaff 
+	group by depart 
+	having avg(salary) >= 340
+	order by avg(salary) desc;
+
+
+select depart, avg(salary) from tstaff where salary > 300 group by depart;
+
+select depart , Max(salary) from tstaff where depart in ('인사과', '영업부') group by depart;
+
+select depart , Max(salary) from tstaff  group by depart having depart in ('인사과', '영업부'); 
+
+select * from tcity;
+
+select name , max(area) from tcity where popu >= 50 group by region;
+
+select avg(area) from tcity group by region having avg(area) > 1000;
+
+
+select avg(area) from tcity group by region;
+
+
